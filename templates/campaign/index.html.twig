@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Campagnes{% endblock %}
+
+{% block body %}
+    <h1>Campagnes</h1>
+    <br />
+    <a href="{{ path('app_campaign_new') }}" class="btn btn-primary">Nouveau</a>
+
+    <br />
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Created At</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for campaign in campaigns %}
+            <tr>
+                <td>{{ campaign.id }}</td>
+                <td>{{ campaign.name }}</td>
+                <td>{{ campaign.createdAt ? campaign.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_campaign_show', {'id': campaign.id}) }}">visualiser</a>
+                    <a href="{{ path('app_campaign_edit', {'id': campaign.id}) }}">editer</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
