@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Prospect{% endblock %}
+
+{% block body %}
+    <h1>Prospect</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ prospect.id }}</td>
+            </tr>
+            <tr>
+                <th>Company</th>
+                <td>{{ prospect.company }}</td>
+            </tr>
+            <tr>
+                <th>Activity</th>
+                <td>{{ prospect.activity }}</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>{{ prospect.address }}</td>
+            </tr>
+            <tr>
+                <th>PostalCode</th>
+                <td>{{ prospect.postalCode }}</td>
+            </tr>
+            <tr>
+                <th>City</th>
+                <td>{{ prospect.city }}</td>
+            </tr>
+            <tr>
+                <th>Phone</th>
+                <td>{{ prospect.phone }}</td>
+            </tr>
+            <tr>
+                <th>Mobile</th>
+                <td>{{ prospect.mobile }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ prospect.email }}</td>
+            </tr>
+            <tr>
+                <th>Createdat</th>
+                <td>{{ prospect.createdat ? prospect.createdat|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Commentary</th>
+                <td>{{ prospect.commentary }}</td>
+            </tr>
+            <tr>
+                <th>Rappel</th>
+                <td>{{ prospect.rappel ? prospect.rappel|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Rendezvous</th>
+                <td>{{ prospect.rendezvous ? prospect.rendezvous|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_prospect_edit', {'id': prospect.id}) }}" class="btn btn-primary">editer</a>
+
+    <br />
+    {{ include('prospect/_delete_form.html.twig') }}
+
+    <br />
+    <a href="{{ path('app_prospect_index') }}">back to list</a>
+
+{% endblock %}

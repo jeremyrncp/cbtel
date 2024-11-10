@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -30,6 +32,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
+
+    /**
+     * @var Collection<int, Prospect>
+     */
+    #[ORM\OneToMany(targetEntity: Prospect::class, mappedBy: 'owner')]
+    private Collection $prospects;
+
+    public function __construct()
+    {
+        $this->prospects = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -104,5 +117,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection<int, Prospect>
+     */
+    public function getProspects(): Collection
+    {
+        return $this->prospects;
+    }
+
+    public function addProspect(Prospect $prospect): static
+    {
+        if (!$this->prospects->contains($prospect)) {
+            $this->prospects->add($prospect);
+            $prospect->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProspect(Prospect $prospect): static
+    {
+        if ($this->prospects->removeElement($prospect)) {
+            // set the owning side to null (unless already changed)
+            if ($prospect->getOwner() === $this) {
+                $prospect->setOwner(null);
+            }
+        }
+
+        return $this;
     }
 }

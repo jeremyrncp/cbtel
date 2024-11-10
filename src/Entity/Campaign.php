@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CampaignRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -19,6 +21,17 @@ class Campaign
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $createdAt = null;
+
+    /**
+     * @var Collection<int, Prospect>
+     */
+    #[ORM\OneToMany(targetEntity: Prospect::class, mappedBy: 'campaign')]
+    private Collection $prospects;
+
+    public function __construct()
+    {
+        $this->prospects = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -45,6 +58,36 @@ class Campaign
     public function setCreatedAt(\DateTimeInterface $createdAt): static
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Prospect>
+     */
+    public function getProspects(): Collection
+    {
+        return $this->prospects;
+    }
+
+    public function addProspect(Prospect $prospect): static
+    {
+        if (!$this->prospects->contains($prospect)) {
+            $this->prospects->add($prospect);
+            $prospect->setCampaign($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProspect(Prospect $prospect): static
+    {
+        if ($this->prospects->removeElement($prospect)) {
+            // set the owning side to null (unless already changed)
+            if ($prospect->getCampaign() === $this) {
+                $prospect->setCampaign(null);
+            }
+        }
 
         return $this;
     }

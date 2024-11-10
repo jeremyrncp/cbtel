@@ -39,7 +39,13 @@
                     ] %} active {% endif %}" href="{{ path('app_campaign_index') }}">Campagnes</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Prospects</a>
+                    <a class="nav-link {% if app.request.attributes.get('_route') in [
+                        'app_prospect_index',
+                        'app_prospect_new',
+                        'app_prospect_show',
+                        'app_prospect_edit',
+                        'app_prospect_delete'
+                    ] %} active {% endif %}" href="{{ path('app_prospect_index') }}">Prospects</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Rendez-vous</a>
