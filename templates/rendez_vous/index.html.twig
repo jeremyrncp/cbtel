@@ -1,15 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Prospect index{% endblock %}
+{% block title %}Rendez-vous{% endblock %}
 
 {% block body %}
-    <h1>Prospects</h1>
+    <h1>Rendez-vous</h1>
     <br />  {{ form(filterForm) }}
-<br />
-    <a href="{{ path('app_prospect_new') }}" class="btn btn-primary">Nouveau</a>
-    {% if is_granted("ROLE_ADMIN") %}
-        <a href="{{ path('app_import_prospect') }}" class="btn btn-primary">Importer CSV</a>
-    {% endif %}
 <br />
     <table class="table">
         <thead>
@@ -23,7 +18,8 @@
                 <th>Phone</th>
                 <th>Mobile</th>
                 <th>Email</th>
-                <th>Createdat</th>
+                <th>Rappel</th>
+                <th>Rendez-vous</th>
                 <th>Commentary</th>
                 <th>actions</th>
             </tr>
@@ -40,7 +36,8 @@
                 <td>{{ prospect.phone }}</td>
                 <td>{{ prospect.mobile }}</td>
                 <td>{{ prospect.email }}</td>
-                <td>{{ prospect.createdat ? prospect.createdat|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ prospect.rappel ? prospect.rappel|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ prospect.rendezvous ? prospect.rendezvous|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ prospect.commentary }}</td>
                 <td>
                     <a href="{{ path('app_prospect_show', {'id': prospect.id}) }}">visualiser</a>
@@ -58,6 +55,6 @@
         {{ knp_pagination_render(prospects) }}
     </div>
     <br />
-    <a target="_blank" href="{{ path('app_export', {'entity': 'prospect'}) }}?campaign={{ campaignId }}" class="btn btn-primary">Exporter tout CSV</a>
+    <a target="_blank" href="{{ path('app_export', {'entity': 'rendezvous'}) }}?campaign={{ campaignId }}" class="btn btn-primary">Exporter tout CSV</a>
 
 {% endblock %}

@@ -3,22 +3,48 @@
 namespace App\Controller;
 
 use App\Entity\Prospect;
+use App\Form\FilterProspectType;
 use App\Form\ProspectType;
 use App\Repository\ProspectRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/prospect')]
+#[IsGranted('ROLE_USER')]
 final class ProspectController extends AbstractController
 {
-    #[Route(name: 'app_prospect_index', methods: ['GET'])]
-    public function index(ProspectRepository $prospectRepository): Response
+    #[Route(name: 'app_prospect_index', methods: ['GET', 'POST'])]
+    public function index(ProspectRepository $prospectRepository, Request $request, PaginatorInterface $paginator): Response
     {
+        $campaignId = null;
+
+        $filterProspectForm = $this->createForm(FilterProspectType::class);
+        $filterProspectForm->handleRequest($request);
+
+        if ($filterProspectForm->isSubmitted() && $filterProspectForm->isValid()) {
+            $prospects = $prospectRepository->findBy([
+                'campaign' => $filterProspectForm['campaign']->getData(),
+            ]);
+            $campaignId = $filterProspectForm['campaign']->getData()->getId();
+        } else {
+            $prospects = $prospectRepository->findAll();
+        }
+
+        $pagination = $paginator->paginate(
+            $prospects,
+            $request->query->getInt('page', 1),
+            10
+        );
+
         return $this->render('prospect/index.html.twig', [
-            'prospects' => $prospectRepository->findAll(),
+            'prospects' => $pagination,
+            'filterForm' => $filterProspectForm->createView(),
+            'campaignId' => $campaignId
         ]);
     }
 
@@ -57,6 +83,11 @@ final class ProspectController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            if ($prospect->getRappel() !== null) {
+                $prospect->setOwner($this->getUser());
+            }
+
             $entityManager->flush();
 
             return $this->redirectToRoute('app_prospect_index', [], Response::HTTP_SEE_OTHER);

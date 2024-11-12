@@ -20,6 +20,7 @@
                 <img src="/images/logo_CBTEL.jpg" alt="logo" width="150" />
             </div>
             <ul class="nav nav-tabs">
+                {% if is_granted("ROLE_ADMIN") %}
                 <li class="nav-item">
                     <a class="nav-link {% if app.request.attributes.get('_route') in [
                         'app_user_index',
@@ -38,17 +39,26 @@
                         'app_campaign_delete'
                     ] %} active {% endif %}" href="{{ path('app_campaign_index') }}">Campagnes</a>
                 </li>
+                {% endif %}
                 <li class="nav-item">
                     <a class="nav-link {% if app.request.attributes.get('_route') in [
                         'app_prospect_index',
                         'app_prospect_new',
                         'app_prospect_show',
                         'app_prospect_edit',
-                        'app_prospect_delete'
+                        'app_prospect_delete',
+                        'app_import_prospect'
                     ] %} active {% endif %}" href="{{ path('app_prospect_index') }}">Prospects</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Rendez-vous</a>
+                    <a class="nav-link{% if app.request.attributes.get('_route') in [
+                        'app_rappels_index'
+                    ] %} active {% endif %}" href="{{ path('app_rappels_index') }}">Rappels</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link{% if app.request.attributes.get('_route') in [
+                        'app_rendezvous_index'
+                    ] %} active {% endif %}" href="{{ path('app_rendezvous_index') }}">Rendez-vous</a>
                 </li>
             </ul>
         </header>
