@@ -31,11 +31,13 @@ class ImportProspectController extends AbstractController
             $campaign = $importProspectForm['campaign']->getData();
 
             if (($handle = fopen($file->getPathname(), "r")) !== false) {
-                while (($data = fgetcsv($handle, 1000, ";")) !== false && $data[1] !== "Activité") {
-                    $entity = new Prospect();
-                    $entity->setCompany($data[0])
-                           ->setActivity($data[1])
-                           ->setAddress($data[2])
+                while (($data = fgetcsv($handle, 1000, ";")) !== false) {
+
+                    if ($data[1] !== "Activité") {
+                        $entity = new Prospect();
+                        $entity->setCompany($data[0])
+                            ->setActivity($data[1])
+                            ->setAddress($data[2])
                             ->setPostalCode($data[3])
                             ->setCity($data[4])
                             ->setPhone($data[5])
@@ -43,9 +45,11 @@ class ImportProspectController extends AbstractController
                             ->setEmail($data[7])
                             ->setCampaign($campaign);
 
-                    $em->persist($entity);
-                    $count ++;
+                        $em->persist($entity);
+                        $count ++;
+                    }
                 }
+
                 fclose($handle);
                 $em->flush();
             }

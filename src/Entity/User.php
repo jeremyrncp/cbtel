@@ -39,6 +39,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Prospect::class, mappedBy: 'owner')]
     private Collection $prospects;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $firstname = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $lastname = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $fonction = null;
+
     public function __construct()
     {
         $this->prospects = new ArrayCollection();
@@ -145,6 +154,42 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $prospect->setOwner(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFirstname(): ?string
+    {
+        return $this->firstname;
+    }
+
+    public function setFirstname(?string $firstname): static
+    {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    public function getLastname(): ?string
+    {
+        return $this->lastname;
+    }
+
+    public function setLastname(?string $lastname): static
+    {
+        $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    public function getFonction(): ?string
+    {
+        return $this->fonction;
+    }
+
+    public function setFonction(?string $fonction): static
+    {
+        $this->fonction = $fonction;
 
         return $this;
     }
