@@ -9,25 +9,23 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Company</th>
-                <th>Activity</th>
-                <th>Address</th>
-                <th>PostalCode</th>
-                <th>City</th>
-                <th>Phone</th>
+                <th>Société</th>
+                <th>Activité</th>
+                <th>Adresse</th>
+                <th>Code Postal</th>
+                <th>Ville</th>
+                <th>Téléphone</th>
                 <th>Mobile</th>
                 <th>Email</th>
                 <th>Rappel</th>
                 <th>Rendez-vous</th>
-                <th>Commentary</th>
+                <th>Commentaire</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for prospect in prospects %}
             <tr>
-                <td>{{ prospect.id }}</td>
                 <td>{{ prospect.company }}</td>
                 <td>{{ prospect.activity }}</td>
                 <td>{{ prospect.address }}</td>
@@ -46,7 +44,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="14">no records found</td>
+                <td colspan="14">pas d'enregistrement</td>
             </tr>
         {% endfor %}
         </tbody>

@@ -35,8 +35,17 @@ final class ProspectController extends AbstractController
             $prospects = $prospectRepository->findAll();
         }
 
+        $prospectFiltered = [];
+
+        /** @var Prospect $prospect */
+        foreach ($prospects as $prospect) {
+            if ($prospect->getRendezvous() === null) {
+                $prospectFiltered[] = $prospect;
+            }
+        }
+
         $pagination = $paginator->paginate(
-            $prospects,
+            $prospectFiltered,
             $request->query->getInt('page', 1),
             10
         );
@@ -44,7 +53,7 @@ final class ProspectController extends AbstractController
         return $this->render('prospect/index.html.twig', [
             'prospects' => $pagination,
             'filterForm' => $filterProspectForm->createView(),
-            'campaignId' => $campaignId
+            'campaignId' => $campaignId,
         ]);
     }
 

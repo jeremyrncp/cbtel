@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Prospect index{% endblock %}
+{% block title %}Prospects{% endblock %}
 
 {% block body %}
     <h1>Prospects</h1>
@@ -8,30 +8,27 @@
 <br />
     <a href="{{ path('app_prospect_new') }}" class="btn btn-primary">Nouveau</a>
     {% if is_granted("ROLE_ADMIN") %}
-        <a href="{{ path('app_import_prospect') }}" class="btn btn-primary">Importer CSV</a>
+        <a href="{{ path('app_import_prospect') }}" class="btn btn-primary">Importer XLS</a>
     {% endif %}
 <br />
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Company</th>
-                <th>Activity</th>
-                <th>Address</th>
-                <th>PostalCode</th>
-                <th>City</th>
-                <th>Phone</th>
+                <th>Société</th>
+                <th>Activité</th>
+                <th>Adresse</th>
+                <th>Code postal</th>
+                <th>Ville</th>
+                <th>Téléphone</th>
                 <th>Mobile</th>
                 <th>Email</th>
-                <th>Createdat</th>
-                <th>Commentary</th>
+                <th>Commentaire</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for prospect in prospects %}
             <tr>
-                <td>{{ prospect.id }}</td>
                 <td>{{ prospect.company }}</td>
                 <td>{{ prospect.activity }}</td>
                 <td>{{ prospect.address }}</td>
@@ -40,16 +37,15 @@
                 <td>{{ prospect.phone }}</td>
                 <td>{{ prospect.mobile }}</td>
                 <td>{{ prospect.email }}</td>
-                <td>{{ prospect.createdat ? prospect.createdat|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ prospect.commentary }}</td>
                 <td>
                     <a href="{{ path('app_prospect_show', {'id': prospect.id}) }}">visualiser</a>
-                    <a href="{{ path('app_prospect_edit', {'id': prospect.id}) }}">editer</a>
+                    <a href="{{ path('app_prospect_edit', {'id': prospect.id}) }}">éditer</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="14">no records found</td>
+                <td colspan="14">pas d'enregistrement</td>
             </tr>
         {% endfor %}
         </tbody>

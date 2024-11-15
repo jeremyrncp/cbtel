@@ -12,16 +12,14 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Created At</th>
+                <th>Nom</th>
+                <th>Date création</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for campaign in campaigns %}
             <tr>
-                <td>{{ campaign.id }}</td>
                 <td>{{ campaign.name }}</td>
                 <td>{{ campaign.createdAt ? campaign.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
@@ -31,7 +29,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="4">pas d'enregistrements</td>
             </tr>
         {% endfor %}
         </tbody>

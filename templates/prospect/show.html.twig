@@ -8,31 +8,27 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ prospect.id }}</td>
-            </tr>
-            <tr>
-                <th>Company</th>
+                <th>Société</th>
                 <td>{{ prospect.company }}</td>
             </tr>
             <tr>
-                <th>Activity</th>
+                <th>Activité</th>
                 <td>{{ prospect.activity }}</td>
             </tr>
             <tr>
-                <th>Address</th>
+                <th>Adresse</th>
                 <td>{{ prospect.address }}</td>
             </tr>
             <tr>
-                <th>PostalCode</th>
+                <th>Code postal</th>
                 <td>{{ prospect.postalCode }}</td>
             </tr>
             <tr>
-                <th>City</th>
+                <th>Ville</th>
                 <td>{{ prospect.city }}</td>
             </tr>
             <tr>
-                <th>Phone</th>
+                <th>Téélphone</th>
                 <td>{{ prospect.phone }}</td>
             </tr>
             <tr>
@@ -44,11 +40,7 @@
                 <td>{{ prospect.email }}</td>
             </tr>
             <tr>
-                <th>Createdat</th>
-                <td>{{ prospect.createdat ? prospect.createdat|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Commentary</th>
+                <th>Commentaire</th>
                 <td>{{ prospect.commentary }}</td>
             </tr>
             <tr>
@@ -56,18 +48,18 @@
                 <td>{{ prospect.rappel ? prospect.rappel|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
-                <th>Rendezvous</th>
+                <th>Rendez vous</th>
                 <td>{{ prospect.rendezvous ? prospect.rendezvous|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_prospect_edit', {'id': prospect.id}) }}" class="btn btn-primary">editer</a>
+    <a href="{{ path('app_prospect_edit', {'id': prospect.id}) }}" class="btn btn-primary">éditer</a>
 
     <br />
     {{ include('prospect/_delete_form.html.twig') }}
 
     <br />
-    <a href="{{ path('app_prospect_index') }}">back to list</a>
+    <a href="{{ path('app_prospect_index') }}">retourner à la liste</a>
 
 {% endblock %}

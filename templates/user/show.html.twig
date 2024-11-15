@@ -8,10 +8,6 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ user.id }}</td>
-            </tr>
-            <tr>
                 <th>Prénom</th>
                 <td>{{ user.firstname }}</td>
             </tr>
@@ -32,7 +28,7 @@
                 <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
             </tr>
             <tr>
-                <th>Password</th>
+                <th>Mot de passe (hash)</th>
                 <td>{{ user.password }}</td>
             </tr>
         </tbody>
@@ -42,6 +38,6 @@
 <br />
     {{ include('user/_delete_form.html.twig') }}
 <br />
-    <a href="{{ path('app_user_index') }}">back to list</a>
+    <a href="{{ path('app_user_index') }}">retourner à la liste</a>
 
 {% endblock %}

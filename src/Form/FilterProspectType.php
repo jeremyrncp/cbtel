@@ -17,6 +17,7 @@ class FilterProspectType extends AbstractType
             ->add('campaign', EntityType::class, [
                 'class' => Campaign::class,
                 'choice_label' => 'name',
+                'label' => 'Campagne'
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Filtrer',

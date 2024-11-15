@@ -18,8 +18,11 @@ class ImportProspectType extends AbstractType
             ->add('campaign', EntityType::class, [
                 'class' => Campaign::class,
                 'choice_label' => 'name',
+                'label' => 'Campagne',
             ])
-            ->add('file', FileType::class)
+            ->add('file', FileType::class, [
+                'label' => 'Fichier XLS',
+            ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Importer',
             ])

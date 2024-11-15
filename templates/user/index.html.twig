@@ -12,13 +12,12 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Prenom</th>
                 <th>Nom</th>
                 <th>Fonction</th>
                 <th>Email</th>
                 <th>Roles</th>
-                <th>Password</th>
+                <th>Mot de passe (hash)</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -39,7 +38,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="5">Pas d'enregistrement</td>
             </tr>
         {% endfor %}
         </tbody>
