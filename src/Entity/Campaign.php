@@ -28,9 +28,16 @@ class Campaign
     #[ORM\OneToMany(targetEntity: Prospect::class, mappedBy: 'campaign')]
     private Collection $prospects;
 
+    /**
+     * @var Collection<int, UserCampaign>
+     */
+    #[ORM\OneToMany(targetEntity: UserCampaign::class, mappedBy: 'campaign')]
+    private Collection $userCampaigns;
+
     public function __construct()
     {
         $this->prospects = new ArrayCollection();
+        $this->userCampaigns = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -86,6 +93,36 @@ class Campaign
             // set the owning side to null (unless already changed)
             if ($prospect->getCampaign() === $this) {
                 $prospect->setCampaign(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UserCampaign>
+     */
+    public function getUserCampaigns(): Collection
+    {
+        return $this->userCampaigns;
+    }
+
+    public function addUserCampaign(UserCampaign $userCampaign): static
+    {
+        if (!$this->userCampaigns->contains($userCampaign)) {
+            $this->userCampaigns->add($userCampaign);
+            $userCampaign->setCampaign($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserCampaign(UserCampaign $userCampaign): static
+    {
+        if ($this->userCampaigns->removeElement($userCampaign)) {
+            // set the owning side to null (unless already changed)
+            if ($userCampaign->getCampaign() === $this) {
+                $userCampaign->setCampaign(null);
             }
         }
 

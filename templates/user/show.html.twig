@@ -28,6 +28,10 @@
                 <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
             </tr>
             <tr>
+                <th>Actif</th>
+                <td>{{ user.active != false ? 'oui' : 'non' }}</td>
+            </tr>
+            <tr>
                 <th>Mot de passe (hash)</th>
                 <td>{{ user.password }}</td>
             </tr>

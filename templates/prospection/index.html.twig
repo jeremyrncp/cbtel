@@ -1,0 +1,176 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Prospection{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <b>Merci de choisir une campagne</b><br />
+    <form id="form-prospection">
+        <select id="campaign" class="form-control">
+            {% for UserCampaign in UserCampaigns %}
+                <option value="{{ UserCampaign.campaign.id }}">{{ UserCampaign.campaign.name }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" class="btn btn-primary"  value="Prospecter" />
+    </form>
+    <br /><br />
+    <section id="content">
+
+    </section>
+
+    <script type="text/javascript">
+        const getActualData = (data, idActual) => {
+            if (idActual === null) {
+              return data[0];
+            }
+
+            var retour = null;
+
+            data.forEach((element) => {
+              if (element.id === idActual) {
+                retour = element;
+              }
+            });
+
+            return retour;
+        };
+
+
+        const makeFormReturnHtml = (data) => {
+          var html = "";
+
+          html += '<div class="form-group"> <label for="companyInput">Société</label> <input type="text" value="' + data.company + '" class="form-control" id="companyInput" disabled /></div><br />';
+          html += '<div class="form-group"> <label for="activiteInput">Activité</label> <input type="text" name="activity" value="' + data.activity + '" class="form-control" id="activiteInput" disabled> </div><br />';
+          html += '<div class="form-group"> <label for="codePostalInput">Code postal</label> <input type="text"  name="postalCode" value="' + data.postalCode + '" class="form-control" id="codePostalInput"> </div><br />';
+          html += '<div class="form-group"> <label for="villeInput">Ville</label> <input type="text"  name="city" value="' + data.city + '" class="form-control" id="villeInput"> </div><br />';
+          html += '<div class="form-group"> <label for="adresseInput">Adresse</label> <input type="text"  name="address" value="' + data.address + '" class="form-control" id="adresseInput"> </div><br />';
+          html += '<div class="form-group"> <label for="telephoneInput">Telephone</label> <input type="text"  name="phone" value="' + data.phone + '" class="form-control" id="telephoneInput"> </div><br />';
+          html += '<div class="form-group"> <label for="mobileInput">Mobile</label> <input type="text"  name="mobile" value="' + data.mobile + '" class="form-control" id="mobileInput"> </div><br />';
+          html += '<div class="form-group"> <label for="commentaireInput">Commentaires</label> <textarea name="commentary" class="form-control" id="commentaireInput">' + data.commentary + '</textarea> </div><br />';
+          html += '<div class="form-group"> <label for="rappelInput">Rappel</label> <input type="datetime-local"  name="rappel" value="' + data.rappel + '" class="form-control" id="rappelInput"> </div><br />';
+          html += '<div class="form-group"> <label for="rendezvousInput">Rendez-vous</label> <input type="datetime-local"  name="rendezvous" value="' + data.rendezvous + '" class="form-control" id="rendezvousInput"> </div><br />';
+          html += '<div class="form-group"> <label for="deleteInput">Numéro non attribué ou entreprise plus existante</label> <input type="checkbox" name="delete"  id="deleteInput"> </div><br />';
+          html += "<input type='hidden' id='idActualInput' value='" + data.id + "' />";
+
+          return html;
+        };
+
+        const initEvent = () => {
+          const idCampaign = $("#campaign").val();
+
+          var request = $.ajax({
+            url: "/api/usercampaign/" + idCampaign,
+            method: "GET",
+            dataType: "json"
+          });
+
+          request.done(function( msg ) {
+            const idActual = msg.idActual;
+
+            var requestBis = $.ajax({
+              url: "/api/campaign/" + idCampaign + "/prospects",
+              method: "GET",
+              dataType: "json"
+            });
+
+            requestBis.done(function( msg ) {
+              const actualData = getActualData(msg, idActual);
+
+              $("#content").html("<form id='form-prospect'>" +
+                  makeFormReturnHtml(actualData) + "<br /><br />" +
+                  "<div style='text-align: : right;'><input type='submit' onclick='submitEvent(event)' class='btn btn-primary' value='Suivant' /></div>" +
+                  "</form>");
+            });
+          });
+          request.fail(function( jqXHR, textStatus ) {
+            alert( "Request failed: " + textStatus );
+          });
+        };
+
+
+
+
+
+
+
+
+        $( "#form-prospection" ).on( "submit", function( event ) {
+          event.preventDefault();
+
+          $("#content").html("<div class='text-center'>Chargement en cours ...</div>");
+
+          initEvent();
+        });
+
+        const submitEvent = (event) => {
+          event.preventDefault();
+
+          const activiteInput = document.querySelector("#activiteInput").value;
+          const codePostalInput = document.querySelector("#codePostalInput").value;
+          const villeInput = document.querySelector("#villeInput").value;
+          const adresseInput = document.querySelector("#adresseInput").value;
+          const telephoneInput = document.querySelector("#telephoneInput").value;
+          const mobileInput = document.querySelector("#mobileInput").value;
+          const commentaireInput = document.querySelector("#commentaireInput").value;
+          const rappelInput = document.querySelector("#rappelInput").value;
+          const rendezvousInput = document.querySelector("#rendezvousInput").value;
+          const isDeleteCheckedInput = document.getElementById("deleteInput").checked;
+          const idActualInput = document.querySelector("#idActualInput").value;
+
+
+          const payload = new FormData();
+          payload.append("activity", activiteInput);
+          payload.append("postalCode", codePostalInput);
+          payload.append("city", villeInput);
+          payload.append("address", adresseInput);
+          payload.append("phone", telephoneInput);
+          payload.append("mobile", mobileInput);
+          payload.append("commentary", commentaireInput);
+          payload.append("rappel", rappelInput);
+          payload.append("rendezvous", rendezvousInput);
+          payload.append("delete", isDeleteCheckedInput);
+
+          var object = {
+            "activity": activiteInput,
+            "postalCode": codePostalInput,
+            "city": villeInput,
+            "address": adresseInput,
+            "phone": telephoneInput,
+            "mobile": mobileInput,
+            "commentary": commentaireInput,
+            "rappel": rappelInput,
+            "rendezvous": rendezvousInput,
+            "delete": isDeleteCheckedInput
+          };
+
+          $("#content").html("<div class='text-center'>Envoie en cours ...</div>");
+
+          var requestSubmit = $.ajax({
+            url: "/api/prospect/" + idActualInput,
+            type: "PUT",
+            dataType: "json",
+            data: JSON.stringify(object),
+            contentType: "application/json"
+          });
+
+          requestSubmit.done(function( msg ) {
+            $("#content").html(msg.message);
+
+            initEvent();
+          });
+
+          requestSubmit.fail(function( jqXHR, textStatus ) {
+            alert( "Request failed: " + textStatus );
+          });
+        };
+
+    </script>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau utilisateur campagne{% endblock %}
+
+{% block body %}
+    <h1>Nouveau utilisateur campagne</h1>
+
+    {{ include('user_campaign/_form.html.twig') }}
+
+    <a href="{{ path('app_user_campaign_index') }}">retourner à la liste</a>
+{% endblock %}

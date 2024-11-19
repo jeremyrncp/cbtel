@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ProspectRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: ProspectRepository::class)]
 class Prospect
@@ -12,49 +13,65 @@ class Prospect
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['show_prospect'])]
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'prospects')]
     private ?Campaign $campaign = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['show_prospect'])]
     private ?string $company = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['show_prospect'])]
     private ?string $activity = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['show_prospect'])]
     private ?string $address = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['show_prospect'])]
     private ?string $postalCode = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['show_prospect'])]
     private ?string $city = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['show_prospect'])]
     private ?string $phone = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['show_prospect'])]
     private ?string $mobile = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['show_prospect'])]
     private ?string $email = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $createdat = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['show_prospect'])]
     private ?string $commentary = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Groups(['show_prospect'])]
     private ?\DateTimeInterface $rappel = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Groups(['show_prospect'])]
     private ?\DateTimeInterface $rendezvous = null;
 
     #[ORM\ManyToOne(inversedBy: 'prospects')]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
     private ?User $owner = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $updatedAt = null;
 
     public function getId(): ?int
     {
@@ -232,5 +249,17 @@ class Prospect
     public function __toString(): string
     {
         return $this->company;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
     }
 }

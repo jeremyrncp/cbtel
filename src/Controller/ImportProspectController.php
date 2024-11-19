@@ -30,14 +30,22 @@ class ImportProspectController extends AbstractController
             /** @var Campaign $campaign */
             $campaign = $importProspectForm['campaign']->getData();
 
-            $reader = new Xlsx();
+            switch ($file->guessExtension()) {
+                case 'xlsx':
+                    $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+                    break;
+                case 'xls':
+                    $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
+                    break;
+            }
+
             $spreadsheet = $reader->load($file->getPathname());
             $worksheet = $spreadsheet->getActiveSheet();
 
             $arrayWorksheet = $worksheet->toArray();
 
             foreach ($arrayWorksheet as $data) {
-                if ($data[1] !== "Activité" && $data[7] !== null) {
+                if ($data[1] !== "Activité" && $data[4] !== null  && $data[1] !== "1") {
                     $entity = new Prospect();
                     $entity->setCompany($data[0])
                         ->setActivity($data[1])
@@ -49,6 +57,12 @@ class ImportProspectController extends AbstractController
                         ->setEmail($data[7])
                         ->setCampaign($campaign);
 
+
+                    if (isset($data[8])) {
+                        $entity
+                            ->setCommentary($data[8]);
+                    }
+                    
                     $em->persist($entity);
                     $count ++;
                 }
