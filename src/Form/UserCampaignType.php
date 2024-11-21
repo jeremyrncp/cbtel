@@ -26,7 +26,7 @@ class UserCampaignType extends AbstractType
             ])
             ->add('user', EntityType::class, [
                 'class' => User::class,
-                'choice_label' => 'email',
+                'choice_label' => 'fullName',
                 'label' => 'Utilisateur'
             ])
         ;

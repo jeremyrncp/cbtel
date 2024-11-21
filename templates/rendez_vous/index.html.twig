@@ -20,6 +20,7 @@
                 <th>Rappel</th>
                 <th>Rendez-vous</th>
                 <th>Commentaire</th>
+                <th>Propriétaire</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -37,6 +38,7 @@
                 <td>{{ prospect.rappel ? prospect.rappel|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ prospect.rendezvous ? prospect.rendezvous|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ prospect.commentary }}</td>
+                <td>{{ prospect.owner ? prospect.owner.fullName : '' }}</td>
                 <td>
                     <a href="{{ path('app_prospect_show', {'id': prospect.id}) }}">visualiser</a>
                     <a href="{{ path('app_prospect_edit', {'id': prospect.id}) }}">editer</a>

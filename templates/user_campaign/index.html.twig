@@ -18,7 +18,7 @@
         <tbody>
         {% for user_campaign in user_campaigns %}
             <tr>
-                <td>{{ user_campaign.user.email }}</td>
+                <td>{{ user_campaign.user.fullName }}</td>
                 <td>{{ user_campaign.campaign.name }}</td>
                 <td>{{ user_campaign.createdAt ? user_campaign.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>

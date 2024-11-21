@@ -69,7 +69,8 @@ class RendezVousExporter implements ExporterInterface
                 $prospect->getCommentary(),
                 $prospect->getRappel()?->format("Y-m-d H:i:s"),
                 $prospect->getRendezvous()?->format("Y-m-d H:i:s"),
-                $prospect->getCampaign()->getName()
+                $prospect->getCampaign()->getName(),
+                $prospect->getOwner()?->getFullName()
             ];
         }
 
@@ -90,7 +91,8 @@ class RendezVousExporter implements ExporterInterface
             'Commentary',
             'Rappel',
             'RDV',
-            'Campaign'
+            'Campaign',
+            'Proprietaire'
         ];
     }
 }
