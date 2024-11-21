@@ -39,7 +39,7 @@ final class RendezVousController extends AbstractController
 
         /** @var Prospect $prospect */
         foreach ($prospects as $prospect) {
-            if (null !== $prospect && $prospect->getRendezvous() > new \DateTime()) {
+            if (null !== $prospect && $prospect->getRendezvous() > new \DateTime() && ($this->isGranted("ROLE_ADMIN") OR $this->getUser() === $prospect->getOwner())) {
                 $prospectsWithRDV[] = $prospect;
             }
         }

@@ -64,6 +64,10 @@ class ApiController extends AbstractController
             $prospect->setOwner($this->getUser());
         }
 
+        if ($prospect->getRendezvous() !== null) {
+            $prospect->setOwner($this->getUser());
+        }
+
         $prospect->setUpdatedAt(new \DateTime());
 
         /** @var UserCampaignRepository $userCampaignRepository */

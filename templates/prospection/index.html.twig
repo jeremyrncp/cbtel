@@ -8,7 +8,8 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
-<div class="example-wrapper">
+<div class="row">
+    <div class="col-8">
     <b>Merci de choisir une campagne</b><br />
     <form id="form-prospection">
         <select id="campaign" class="form-control">
@@ -170,7 +171,10 @@
         };
 
     </script>
+    </div>
+    <div class="col-4">
+        <iframe src="{{ iframe }}" width="400" height="800"></iframe>
+    </div>
 </div>
-
 
 {% endblock %}

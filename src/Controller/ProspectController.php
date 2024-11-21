@@ -97,6 +97,10 @@ final class ProspectController extends AbstractController
                 $prospect->setOwner($this->getUser());
             }
 
+            if ($prospect->getRendezvous() !== null) {
+                $prospect->setOwner($this->getUser());
+            }
+
             $entityManager->flush();
 
             return $this->redirectToRoute('app_prospect_index', [], Response::HTTP_SEE_OTHER);

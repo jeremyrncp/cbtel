@@ -6,6 +6,7 @@ use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Core\User\InMemoryUser;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class ProspectionController extends AbstractController
@@ -17,8 +18,13 @@ class ProspectionController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
 
+        if ($user instanceof InMemoryUser) {
+            return $this->redirectToRoute("app_prospect_index");
+        }
+
         return $this->render('prospection/index.html.twig', [
             'UserCampaigns' => $user->getUserCampaigns(),
+            "iframe" => $_ENV["IFRAME_PROSPECTION"]
         ]);
     }
 }
