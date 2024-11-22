@@ -9,6 +9,10 @@
 </style>
 
 <div class="example-wrapper">
-    {{ form(form) }}
+    {% if message is not NULL %}
+        <div class="alert alert-info">{{ message }}</div>
+    {% else %}
+        {{ form(form) }}
+    {% endif %}
 </div>
 {% endblock %}
