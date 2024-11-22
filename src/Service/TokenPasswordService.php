@@ -43,7 +43,7 @@ class TokenPasswordService
         $email = (new TemplatedEmail())
             ->to($email)
             ->subject('Definition du mot de passe')
-            ->htmlTemplate('email/welcome_practician.html.twig')
+            ->htmlTemplate('email/reset_password.html.twig')
             ->context([
                 'user' => $user,
                 'connectLink' => $this->getConnectLink($token)
