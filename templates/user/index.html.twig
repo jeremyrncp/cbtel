@@ -17,7 +17,6 @@
                 <th>Fonction</th>
                 <th>Email</th>
                 <th>Roles</th>
-                <th>Mot de passe (hash)</th>
                 <th>Actif</th>
                 <th>actions</th>
             </tr>
@@ -30,11 +29,11 @@
                 <td>{{ user.fonction }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-                <td>{{ user.password }}</td>
                 <td>{{ user.active != false ? 'oui' : 'non' }}</td>
                 <td>
                     <a href="{{ path('app_user_show', {'id': user.id}) }}">visualiser</a>
                     <a href="{{ path('app_user_edit', {'id': user.id}) }}">éditer</a>
+                    <a href="{{ path('app_user_password', {'id': user.id}) }}">reinitialiser mot de passe</a>
                 </td>
             </tr>
         {% else %}

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use App\Service\TokenPasswordService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,19 +27,17 @@ final class UserController extends AbstractController
     }
 
     #[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, PasswordHasherFactoryInterface $passwordHasherFactory): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, TokenPasswordService $tokenPasswordService): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if (strlen($user->getPassword()) <= 15) {
-                //hash password
-                $user->setPassword($passwordHasherFactory->getPasswordHasher($user)->hash($user->getPassword()));
-            }
             $entityManager->persist($user);
             $entityManager->flush();
+
+            $tokenPasswordService->sendPasswordReset($user->getEmail());
 
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -57,6 +56,14 @@ final class UserController extends AbstractController
         ]);
     }
 
+    #[Route('/{id}/password', name: 'app_user_password', methods: ['GET'])]
+    public function password(TokenPasswordService $tokenPasswordService, User $user): Response
+    {
+        $tokenPasswordService->sendPasswordReset($user->getEmail());
+
+        return $this->render('user/password.html.twig');
+    }
+
     #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user, EntityManagerInterface $entityManager, PasswordHasherFactoryInterface $passwordHasherFactory): Response
     {
@@ -64,11 +71,6 @@ final class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            if (strlen($user->getPassword()) <= 15) {
-                //hash password
-                $user->setPassword($passwordHasherFactory->getPasswordHasher($user)->hash($user->getPassword()));
-            }
             $entityManager->flush();
 
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);

@@ -34,9 +34,6 @@ class UserType extends AbstractType
                     'Admin' => 'ROLE_ADMIN'
                 ]
             ])
-            ->add('password', TextType::class, [
-                'label' => 'Mot de passe'
-            ])
             ->add('active', CheckboxType::class, [
                 'label' => 'Actif',
                 'required' => false

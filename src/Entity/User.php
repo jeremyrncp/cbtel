@@ -58,10 +58,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Equatab
     #[ORM\OneToMany(targetEntity: UserCampaign::class, mappedBy: 'user')]
     private Collection $userCampaigns;
 
+    /**
+     * @var Collection<int, TokenPassword>
+     */
+    #[ORM\OneToMany(targetEntity: TokenPassword::class, mappedBy: 'owner')]
+    private Collection $tokenPasswords;
+
     public function __construct()
     {
         $this->prospects = new ArrayCollection();
         $this->userCampaigns = new ArrayCollection();
+        $this->tokenPasswords = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -259,5 +266,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Equatab
     public function getFullName(): string
     {
         return $this->firstname . " " . $this->lastname;
+    }
+
+    /**
+     * @return Collection<int, TokenPassword>
+     */
+    public function getTokenPasswords(): Collection
+    {
+        return $this->tokenPasswords;
+    }
+
+    public function addTokenPassword(TokenPassword $tokenPassword): static
+    {
+        if (!$this->tokenPasswords->contains($tokenPassword)) {
+            $this->tokenPasswords->add($tokenPassword);
+            $tokenPassword->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTokenPassword(TokenPassword $tokenPassword): static
+    {
+        if ($this->tokenPasswords->removeElement($tokenPassword)) {
+            // set the owning side to null (unless already changed)
+            if ($tokenPassword->getOwner() === $this) {
+                $tokenPassword->setOwner(null);
+            }
+        }
+
+        return $this;
     }
 }
