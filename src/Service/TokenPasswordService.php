@@ -41,6 +41,7 @@ class TokenPasswordService
         $this->entityManager->flush();
 
         $email = (new TemplatedEmail())
+            ->from($_ENV["MAIL_FROM"])
             ->to($email)
             ->subject('Definition du mot de passe')
             ->htmlTemplate('email/reset_password.html.twig')
