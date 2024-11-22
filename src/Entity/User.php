@@ -55,13 +55,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Equatab
     /**
      * @var Collection<int, UserCampaign>
      */
-    #[ORM\OneToMany(targetEntity: UserCampaign::class, mappedBy: 'user', cascade: ["delete"])]
+    #[ORM\OneToMany(targetEntity: UserCampaign::class, mappedBy: 'user', cascade: ["remove"])]
     private Collection $userCampaigns;
 
     /**
      * @var Collection<int, TokenPassword>
      */
-    #[ORM\OneToMany(targetEntity: TokenPassword::class, mappedBy: 'owner', cascade: ["delete"])]
+    #[ORM\OneToMany(targetEntity: TokenPassword::class, mappedBy: 'owner', cascade: ["remove"])]
     private Collection $tokenPasswords;
 
     public function __construct()
