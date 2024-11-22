@@ -25,7 +25,7 @@ class TokenPasswordService
         $userRepository = $this->entityManager->getRepository(User::class);
 
         /** @var User $user */
-        $user = $userRepository->findBy(['email' => $email]);
+        $user = $userRepository->findOneBy(['email' => $email]);
 
         if ($user === null) {
             throw new NotFoundHttpException("user not found");
@@ -61,7 +61,7 @@ class TokenPasswordService
         $tokenPasswordRepository = $this->entityManager->getRepository(TokenPassword::class);
 
         /** @var TokenPassword $tokenPassword */
-        $tokenPassword = $tokenPasswordRepository->findBy(['token' => $token]);
+        $tokenPassword = $tokenPasswordRepository->findOneBy(['token' => $token]);
 
         if ($tokenPassword->getUsedAt() === null) {
             $user = $tokenPassword->getOwner();
