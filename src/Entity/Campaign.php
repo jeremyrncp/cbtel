@@ -25,13 +25,13 @@ class Campaign
     /**
      * @var Collection<int, Prospect>
      */
-    #[ORM\OneToMany(targetEntity: Prospect::class, mappedBy: 'campaign')]
+    #[ORM\OneToMany(targetEntity: Prospect::class, mappedBy: 'campaign', cascade: ['remove'])]
     private Collection $prospects;
 
     /**
      * @var Collection<int, UserCampaign>
      */
-    #[ORM\OneToMany(targetEntity: UserCampaign::class, mappedBy: 'campaign')]
+    #[ORM\OneToMany(targetEntity: UserCampaign::class, mappedBy: 'campaign', cascade: ['remove'])]
     private Collection $userCampaigns;
 
     public function __construct()
