@@ -43,7 +43,16 @@ class ApiController extends AbstractController
             'campaign' => $campaign,
         ]);
 
-        return $this->success($prospects, ['show_prospect']);
+        $prospectsFiltered = [];
+
+        /** @var Prospect $prospect */
+        foreach ($prospects as $prospect) {
+            if ($prospect->getRappel() === null && $prospect->getRendezvous() === null) {
+                $prospectsFiltered[] = $prospect;
+            }
+        }
+
+        return $this->success($prospectsFiltered, ['show_prospect']);
     }
 
     #[Route(path: '/api/prospect/{prospect}', name: 'api_prospect_update', methods: ['PUT'])]
