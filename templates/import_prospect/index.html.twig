@@ -11,9 +11,17 @@
 <div class="example-wrapper">
     {{ form(form) }}
     <br /><br />
+    {% if messageError is not null %}
+        <div class="alert alert-danger">
+            {{ messageError }}
+        </div>
+        <br /><br />
+    {% endif %}
 
     {% if count > 0 %}
         <b>{{ count }} propects</b> importés
     {% endif %}
+    <br />
+    <a href="/example.xlsx" class="btn btn-primary">Fichier d'exemple</a>
 </div>
 {% endblock %}
