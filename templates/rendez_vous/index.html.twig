@@ -9,6 +9,7 @@
     <table class="table">
         <thead>
             <tr>
+                <th>&nbsp;</th>
                 <th>Société</th>
                 <th>Activité</th>
                 <th>Adresse</th>
@@ -27,6 +28,7 @@
         <tbody>
         {% for prospect in prospects %}
             <tr>
+                <td><input type="checkbox" onclick="handleDeleteMass({{ prospect.id }})" /></td>
                 <td>{{ prospect.company }}</td>
                 <td>{{ prospect.activity }}</td>
                 <td>{{ prospect.address }}</td>
@@ -55,6 +57,9 @@
         {{ knp_pagination_render(prospects) }}
     </div>
     <br />
+    <a onclick="submitDeleteMass()" id="deleteMassButton" class="btn btn-secondary d-none">Supprimer tout</a>
+    <br />
     <a target="_blank" href="{{ path('app_export', {'entity': 'rendezvous'}) }}?campaign={{ campaignId }}" class="btn btn-primary">Exporter tout CSV</a>
 
+    {% include "delete_mass/script.html.twig" %}
 {% endblock %}

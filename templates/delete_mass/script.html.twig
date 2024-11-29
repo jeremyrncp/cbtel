@@ -1,0 +1,36 @@
+<script type="text/javascript">
+    var deleteMassItems = [];
+
+    const handleDeleteMass = (id) => {
+      const index = deleteMassItems.indexOf(id);
+      if (index > -1) {
+        deleteMassItems.splice(index, 1);
+      } else {
+        deleteMassItems.push(id);
+      }
+
+      if (deleteMassItems.length === 0) {
+        document.querySelector("#deleteMassButton").className = "btn btn-secondary d-none";
+      } else {
+        document.querySelector("#deleteMassButton").className = "btn btn-secondary";
+      }
+    };
+
+    const submitDeleteMass = () => {
+      var requestSubmit = $.ajax({
+        url: "/api/deletemass",
+        type: "POST",
+        dataType: "json",
+        data: JSON.stringify({items: deleteMassItems}),
+        contentType: "application/json"
+      });
+
+      requestSubmit.done(function( msg ) {
+        if(!alert(msg.message)){window.location.reload();}
+      });
+
+      requestSubmit.fail(function( jqXHR, textStatus ) {
+        alert( "Request failed: " + textStatus );
+      });
+    };
+</script>

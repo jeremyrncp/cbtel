@@ -12,6 +12,7 @@ use App\Repository\UserCampaignRepository;
 use App\Service\UserService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -22,8 +23,11 @@ use Symfony\Component\Serializer\Context\Normalizer\ObjectNormalizerContextBuild
 
 class ApiController extends AbstractController
 {
-    public function __construct(private readonly UserService $userService, private readonly EntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        private readonly UserService $userService,
+        private readonly EntityManagerInterface $entityManager,
+        private readonly Security $security
+    ) {
     }
 
     #[Route(path: '/api/campaign/{campaign}/prospects', name: 'api_campaign_prospect', methods: ['GET'])]
@@ -53,6 +57,37 @@ class ApiController extends AbstractController
         }
 
         return $this->success($prospectsFiltered, ['show_prospect']);
+    }
+
+
+    #[Route(path: '/api/deletemass', name: 'api_prospect_deletemass', methods: ['POST'])]
+    #[IsGranted('ROLE_USER')]
+    public function deleteMassProspect(Request $request)
+    {
+        $json = json_decode($request->getContent(), true);
+
+        if (!array_key_exists("items", $json)) {
+            return $this->json(['message' => 'Request malformed'], 400);
+        }
+
+        /** @var array $items */
+        $items = $json['items'];
+
+        $prospectRepository = $this->entityManager->getRepository(Prospect::class);
+
+        foreach ($items as $item) {
+            $prospect = $prospectRepository->find($item);
+
+            if ($prospect instanceof Prospect) {
+                if ($prospect->getOwner() === $this->getUser() OR $this->security->isGranted("ROLE_ADMIN")) {
+                    $this->entityManager->remove($prospect);
+                }
+            }
+        }
+
+        $this->entityManager->flush();
+
+        return $this->json(['message' => 'Suppression réalisé avec succès']);
     }
 
     #[Route(path: '/api/prospect/{prospect}', name: 'api_prospect_update', methods: ['PUT'])]
