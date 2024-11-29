@@ -38,12 +38,15 @@
               }
             });
 
+            if (retour === null) {
+              return data[0];
+            }
+
             return retour;
         };
 
 
         const makeFormReturnHtml = (data) => {
-          console.log(data);
           var html = "";
 
           html += '<div class="form-group"> <label for="companyInput">Société</label> <input type="text" value="' + data.company + '" class="form-control" id="companyInput" disabled /></div><br />';
