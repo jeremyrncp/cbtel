@@ -98,9 +98,9 @@ class ApiController extends AbstractController
 
         /** @var Prospect $prospectEntity */
         foreach ($prospects as $prospectEntity) {
-            if ($prospectEntity->getId() === $prospect->getId() && $prospectEntity->getOwner() === null) {
+            if ($prospectEntity->getId() === $prospect->getId()) {
                 $findProspect = true;
-            } else if ($findProspect === true && $idActual === null) {
+            } else if ($findProspect === true && $idActual === null && $prospectEntity->getOwner() === null) {
                 $idActual = $prospectEntity->getId();
             }
         }
