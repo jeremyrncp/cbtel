@@ -37,22 +37,27 @@ class ProspectType extends AbstractType
                 'label' => 'Ville'
             ])
             ->add('phone', TextType::class, [
-                'label' => 'Téléphone'
+                'label' => 'Téléphone',
+                'required' => false
             ])
             ->add('mobile', TextType::class, [
-                'label' => 'Mobile'
+                'label' => 'Mobile',
+                'required' => false
             ])
             ->add('email')
             ->add('commentary', TextType::class, [
-                'label' => 'Commentaire'
+                'label' => 'Commentaire',
+                'required' => false
             ])
             ->add('rappel', null, [
                 'widget' => 'single_text',
-                'label' => 'Rappel'
+                'label' => 'Rappel',
+                'required' => false
             ])
             ->add('rendezvous', null, [
                 'widget' => 'single_text',
-                'label' => 'Rendez-vous'
+                'label' => 'Rendez-vous',
+                'required' => false
             ])
         ;
     }
