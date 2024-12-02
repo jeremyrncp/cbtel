@@ -41,10 +41,10 @@
         const makeFormReturnHtml = (data) => {
           var html = "";
 
-          html += '<div class="form-group"> <label for="companyInput">Société</label> <input type="text" value="' + data.company + '" class="form-control" id="companyInput" disabled /></div><br />';
-          html += '<div class="form-group"> <label for="activiteInput">Activité</label> <input type="text" name="activity" value="' + data.activity + '" class="form-control" id="activiteInput" disabled> </div><br />';
-          html += '<div class="form-group"> <label for="codePostalInput">Code postal</label> <input type="text"  name="postalCode" value="' + data.postalCode + '" class="form-control" id="codePostalInput"> </div><br />';
-          html += '<div class="form-group"> <label for="villeInput">Ville</label> <input type="text"  name="city" value="' + data.city + '" class="form-control" id="villeInput"> </div><br />';
+          html += '<div class="row"><div class="col-6"><div class="form-group"> <label for="companyInput">Société</label> <input type="text" value="' + data.company + '" class="form-control" id="companyInput" disabled /></div></div>';
+          html += '<div class="col-6"><div class="form-group"> <label for="activiteInput">Activité</label> <input type="text" name="activity" value="' + data.activity + '" class="form-control" id="activiteInput" disabled> </div></div></div><br />';
+          html += '<div class="row"><div class="col-6"><div class="form-group"> <label for="codePostalInput">Code postal</label> <input type="text"  name="postalCode" value="' + data.postalCode + '" class="form-control" id="codePostalInput"> </div></div>';
+          html += '<div class="col-6"><div class="form-group"> <label for="villeInput">Ville</label> <input type="text"  name="city" value="' + data.city + '" class="form-control" id="villeInput"> </div></div></div><br />';
           html += '<div class="form-group"> <label for="adresseInput">Adresse</label> <input type="text"  name="address" value="' + data.address + '" class="form-control" id="adresseInput"> </div><br />';
           html += '<div class="form-group"> <label for="telephoneInput">Telephone</label> <input type="text"  name="phone" value="' + data.phone + '" class="form-control" id="telephoneInput"> </div><br />';
           html += '<div class="form-group"> <label for="mobileInput">Mobile</label> <input type="text"  name="mobile" value="' + data.mobile + '" class="form-control" id="mobileInput"> </div><br />';
@@ -80,7 +80,7 @@
 
               $("#content").html("<form id='form-prospect'>" +
                   makeFormReturnHtml(actualData) + "<br /><br />" +
-                  "<div style='text-align: : right;'><input type='submit' onclick='submitEvent(event)' class='btn btn-primary' value='Suivant' /></div>" +
+                  "<div class='d-grid'><input type='submit' onclick='submitEvent(event)' class='btn btn-primary' value='Suivant' /></div>" +
                   "</form>");
             });
           });
