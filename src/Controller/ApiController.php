@@ -61,7 +61,7 @@ class ApiController extends AbstractController
 
 
     #[Route(path: '/api/deletemass', name: 'api_prospect_deletemass', methods: ['POST'])]
-    #[IsGranted('ROLE_USER')]
+    #[IsGranted('ROLE_ADMIN')]
     public function deleteMassProspect(Request $request)
     {
         $json = json_decode($request->getContent(), true);
@@ -79,9 +79,7 @@ class ApiController extends AbstractController
             $prospect = $prospectRepository->find($item);
 
             if ($prospect instanceof Prospect) {
-                if ($prospect->getOwner() === $this->getUser() OR $this->security->isGranted("ROLE_ADMIN")) {
-                    $this->entityManager->remove($prospect);
-                }
+                $this->entityManager->remove($prospect);
             }
         }
 
