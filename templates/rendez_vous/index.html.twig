@@ -9,7 +9,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th>&nbsp;</th>
+                {% if is_granted("ROLE_ADMIN") %} <th>&nbsp;</th> {% endif %}
                 <th>Société</th>
                 <th>Activité</th>
                 <th>Adresse</th>
@@ -24,7 +24,7 @@
         <tbody>
         {% for prospect in prospects %}
             <tr>
-                <td><input type="checkbox" onclick="handleDeleteMass({{ prospect.id }})" /></td>
+                {% if is_granted("ROLE_ADMIN") %}<td><input type="checkbox" onclick="handleDeleteMass({{ prospect.id }})" /></td> {% endif %}
                 <td>{{ prospect.company }}</td>
                 <td>{{ prospect.activity }}</td>
                 <td>{{ prospect.address }}</td>
@@ -49,9 +49,11 @@
         {{ knp_pagination_render(prospects) }}
     </div>
     <br />
-    <a onclick="submitDeleteMass()" id="deleteMassButton" class="btn btn-secondary d-none">Supprimer tout</a>
+    {% if is_granted("ROLE_ADMIN") %}<a onclick="submitDeleteMass()" id="deleteMassButton" class="btn btn-secondary d-none">Supprimer tout</a>{% endif %}
     <br />
     <a target="_blank" href="{{ path('app_export', {'entity': 'rendezvous'}) }}?campaign={{ campaignId }}" class="btn btn-primary">Exporter tout CSV</a>
 
-    {% include "delete_mass/script.html.twig" %}
+    {% if is_granted("ROLE_ADMIN") %}
+        {% include "delete_mass/script.html.twig" %}
+    {% endif %}
 {% endblock %}
