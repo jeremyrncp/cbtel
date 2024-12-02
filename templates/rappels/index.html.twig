@@ -17,10 +17,7 @@
                 <th>Ville</th>
                 <th>Téléphone</th>
                 <th>Mobile</th>
-                <th>Email</th>
                 <th>Rappel</th>
-                <th>Rendez-vous</th>
-                <th>Commentaire</th>
                 <th>Propriétaire</th>
                 <th>actions</th>
             </tr>
@@ -36,10 +33,7 @@
                 <td>{{ prospect.city }}</td>
                 <td>{{ prospect.phone }}</td>
                 <td>{{ prospect.mobile }}</td>
-                <td>{{ prospect.email }}</td>
                 <td>{{ prospect.rappel ? prospect.rappel|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ prospect.rendezvous ? prospect.rendezvous|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ prospect.commentary }}</td>
                 <td>{{ prospect.owner ? prospect.owner.fullName : '' }}</td>
                 <td>
                     <a href="{{ path('app_prospect_show', {'id': prospect.id}) }}">visualiser</a>
