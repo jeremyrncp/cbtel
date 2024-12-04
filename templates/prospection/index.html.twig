@@ -45,11 +45,11 @@
           html += '<div class="row"><div class="col-6"><div class="form-group"> <label for="codePostalInput">Code postal</label> <input type="text"  name="postalCode" value="' + data.postalCode + '" class="form-control" id="codePostalInput"> </div></div>';
           html += '<div class="col-6"><div class="form-group"> <label for="villeInput">Ville</label> <input type="text"  name="city" value="' + data.city + '" class="form-control" id="villeInput"> </div></div></div><br />';
           html += '<div class="form-group"> <label for="adresseInput">Adresse</label> <input type="text"  name="address" value="' + data.address + '" class="form-control" id="adresseInput"> </div><br />';
-          html += '<div class="form-group"> <label for="telephoneInput">Telephone</label> <input type="text"  name="phone" value="' + data.phone + '" class="form-control" id="telephoneInput"> </div><br />';
-          html += '<div class="form-group"> <label for="mobileInput">Mobile</label> <input type="text"  name="mobile" value="' + data.mobile + '" class="form-control" id="mobileInput"> </div><br />';
+          html += '<div class="row"><div class="col-6"><div class="form-group"> <label for="telephoneInput">Telephone</label> <input type="text"  name="phone" value="' + data.phone + '" class="form-control" id="telephoneInput"> </div></div>';
+          html += '<div class="col-6"><div class="form-group"> <label for="mobileInput">Mobile</label> <input type="text"  name="mobile" value="' + data.mobile + '" class="form-control" id="mobileInput"> </div></div/></div><br />';
           html += '<div class="form-group"> <label for="commentaireInput">Commentaires</label> <textarea name="commentary" class="form-control" id="commentaireInput">' + data.commentary + '</textarea> </div><br />';
-          html += '<div class="form-group"> <label for="rappelInput">Rappel</label> <input type="datetime-local"  name="rappel" value="' + data.rappel + '" class="form-control" id="rappelInput"> </div><br />';
-          html += '<div class="form-group"> <label for="rendezvousInput">Rendez-vous</label> <input type="datetime-local"  name="rendezvous" value="' + data.rendezvous + '" class="form-control" id="rendezvousInput"> </div><br />';
+          html += '<div class="row"><div class="col-6"><div class="form-group"> <label for="rappelInput">Rappel</label> <input type="datetime-local"  name="rappel" value="' + data.rappel + '" class="form-control" id="rappelInput"> </div></div>';
+          html += '<div class="col-6"><div class="form-group"> <label for="rendezvousInput">Rendez-vous</label> <input type="datetime-local"  name="rendezvous" value="' + data.rendezvous + '" class="form-control" id="rendezvousInput"> </div></div></div><br />';
           html += '<div class="form-group"> <label for="deleteInput">Numéro non attribué ou entreprise plus existante</label> <input type="checkbox" name="delete"  id="deleteInput"> </div><br />';
           html += "<input type='hidden' id='idActualInput' value='" + data.id + "' />";
 
