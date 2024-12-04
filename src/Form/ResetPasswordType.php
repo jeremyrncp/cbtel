@@ -23,7 +23,7 @@ class ResetPasswordType extends AbstractType
                     ]),
                     new Length([
                         'min' => 8,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
+                        'minMessage' => 'Votre mot de passe doit compoter {{ limit }} charactères',
                         'max' => 255,
                     ]),
                     new Regex([
