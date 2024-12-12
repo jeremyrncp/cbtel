@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editer Template{% endblock %}
+
+{% block body %}
+    <h1>Editer Template</h1>
+
+    {{ include('template/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+    <br />
+    {{ include('template/variables.html.twig') }}
+<br />
+
+    {{ include('template/_delete_form.html.twig') }}
+<br />
+    <a href="{{ path('app_template_index') }}">retourner à la liste</a>
+{% endblock %}

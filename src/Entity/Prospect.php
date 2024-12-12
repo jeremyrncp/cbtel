@@ -73,6 +73,12 @@ class Prospect
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $updatedAt = null;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $smsNotification = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $emailNotification = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -259,6 +265,30 @@ class Prospect
     public function setUpdatedAt(?\DateTimeInterface $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getSmsNotification(): ?\DateTimeInterface
+    {
+        return $this->smsNotification;
+    }
+
+    public function setSmsNotification(?\DateTimeInterface $smsNotification): static
+    {
+        $this->smsNotification = $smsNotification;
+
+        return $this;
+    }
+
+    public function getEmailNotification(): ?\DateTimeInterface
+    {
+        return $this->emailNotification;
+    }
+
+    public function setEmailNotification(?\DateTimeInterface $emailNotification): static
+    {
+        $this->emailNotification = $emailNotification;
 
         return $this;
     }

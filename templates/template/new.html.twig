@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau template{% endblock %}
+
+{% block body %}
+    <h1>Nouveau template</h1>
+
+    {{ include('template/_form.html.twig') }}
+
+    <br />
+    {{ include('template/variables.html.twig') }}
+<br />
+
+    <a href="{{ path('app_template_index') }}">retourner à la liste</a>
+{% endblock %}

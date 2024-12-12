@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer template par défaut{% endblock %}
+
+{% block body %}
+    <h1>Créer template par défaut</h1>
+
+    {{ include('default_template/_form.html.twig') }}
+
+    <a href="{{ path('app_default_template_index') }}">retourner à la liste</a>
+{% endblock %}

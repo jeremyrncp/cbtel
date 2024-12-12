@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editer template par défaut{% endblock %}
+
+{% block body %}
+    <h1>Editer template par défaut</h1>
+
+    {{ include('default_template/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+    <br />
+    {{ include('default_template/_delete_form.html.twig') }}
+<br />
+    <a href="{{ path('app_default_template_index') }}">retourner à la liste</a>
+
+{% endblock %}

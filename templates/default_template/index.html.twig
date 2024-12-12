@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Templates par défaut{% endblock %}
+
+{% block body %}
+    <h1>Templates par défaut</h1>
+    <a href="{{ path('app_default_template_new') }}" class="btn btn-primary">Nouveau</a>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Nom</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for default_template in default_templates %}
+            <tr>
+                <td>{{ default_template.type }}</td>
+                <td>{{ default_template.template.name }}</td>
+                <td>
+                    <a href="{{ path('app_default_template_show', {'id': default_template.id}) }}">visualiser</a>
+                    <a href="{{ path('app_default_template_edit', {'id': default_template.id}) }}">editer</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">pas d'enregistrement trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
