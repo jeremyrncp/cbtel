@@ -16,6 +16,17 @@ class ProspectRepository extends ServiceEntityRepository
         parent::__construct($registry, Prospect::class);
     }
 
+
+    public function getWithoutNotificationSMS(\DateTime $start)
+    {
+        return $this->createQueryBuilder("p")
+                    ->andWhere("p.smsNotification IS NULL")
+                    ->andWhere("p.rendezvous < :start")
+                    ->setParameter("start", $start)
+                    ->getQuery()
+                    ->getResult();
+    }
+
     //    /**
     //     * @return Prospect[] Returns an array of Prospect objects
     //     */

@@ -19,8 +19,6 @@
                 <th>Mobile</th>
                 <th>Rappel</th>
                 <th>Propriétaire</th>
-                <th>Notification sms</th>
-                <th>Notification email</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -37,13 +35,9 @@
                 <td>{{ prospect.mobile }}</td>
                 <td>{{ prospect.rappel ? prospect.rappel|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ prospect.owner ? prospect.owner.fullName : '' }}</td>
-                <td>{{ prospect.smsNotification ? prospect.smsNotification|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ prospect.emailNotification ? prospect.emailNotification|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
                     <a href="{{ path('app_prospect_show', {'id': prospect.id}) }}">visualiser</a>
                     <a href="{{ path('app_prospect_edit', {'id': prospect.id}) }}">éditer</a>
-                    <a target="_blank" href="{{ path('app_send_select_template', {'prospect': prospect.id, 'type': 'sms'}) }}">notif sms</a>
-                    <a target="_blank" href="{{ path('app_send_select_template', {'prospect': prospect.id, 'type': 'email'}) }}">notif email</a>
                 </td>
             </tr>
         {% else %}

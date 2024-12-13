@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Logger{% endblock %}
+
+{% block body %}
+    <h1>Logger</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ logger.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ logger.name }}</td>
+            </tr>
+            <tr>
+                <th>Contenu</th>
+                <td>{{ logger.content }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ logger.createdAt ? logger.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_logger_index') }}">retourner à la liste</a>
+{% endblock %}
