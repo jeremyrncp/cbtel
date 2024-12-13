@@ -52,13 +52,13 @@ class NotificationRdvCommand extends Command
 
                 if (strlen($to) >= 10) {
                     if ($sender->send($to, $templateRendered)) {
-                        $this->loggerService->saveLog("Prospect", "Notification transmise au prospect " . $prospect->getId());
+                        $this->loggerService->saveLog("Prospect", "Notification sms transmise au prospect " . $prospect->getId());
 
                         if ($template->getType() === NotificationService::TYPE_SMS) {
                             $prospect->setSmsNotification(new \DateTime());
                         }
                     } else {
-                        $this->loggerService->saveLog("Prospect", "Une erreur inconnue est survenue lors de l'envoie de la notification au prospect " . $prospect->getId());
+                        $this->loggerService->saveLog("Prospect", "Une erreur inconnue est survenue lors de l'envoie de la notification sms au prospect " . $prospect->getId());
                     }
                 } else {
                     $this->loggerService->saveLog("Prospect", "Le numéro d'envoie du mobile n'est pas valide pour le prospect " . $prospect->getId());

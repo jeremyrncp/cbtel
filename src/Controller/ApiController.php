@@ -9,6 +9,7 @@ use App\Entity\UserCampaign;
 use App\Form\ProspectApiType;
 use App\Repository\ProspectRepository;
 use App\Repository\UserCampaignRepository;
+use App\Service\Notification\SendEmailNotificationService;
 use App\Service\UserService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,7 +27,8 @@ class ApiController extends AbstractController
     public function __construct(
         private readonly UserService $userService,
         private readonly EntityManagerInterface $entityManager,
-        private readonly Security $security
+        private readonly Security $security,
+        private readonly SendEmailNotificationService $sendEmailNotificationService
     ) {
     }
 
@@ -108,6 +110,8 @@ class ApiController extends AbstractController
 
         if ($prospect->getRendezvous() !== null) {
             $prospect->setOwner($this->getUser());
+
+            $this->sendEmailNotificationService->send($prospect);
         }
 
         $prospect->setUpdatedAt(new \DateTime());

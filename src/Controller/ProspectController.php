@@ -6,6 +6,7 @@ use App\Entity\Prospect;
 use App\Form\FilterProspectType;
 use App\Form\ProspectType;
 use App\Repository\ProspectRepository;
+use App\Service\Notification\SendEmailNotificationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,6 +19,12 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_USER')]
 final class ProspectController extends AbstractController
 {
+    public function __construct(
+        private readonly SendEmailNotificationService $sendEmailNotificationService
+    )
+    {
+    }
+
     #[Route(name: 'app_prospect_index', methods: ['GET', 'POST'])]
     public function index(ProspectRepository $prospectRepository, Request $request, PaginatorInterface $paginator): Response
     {
@@ -99,6 +106,8 @@ final class ProspectController extends AbstractController
 
             if ($prospect->getRendezvous() !== null) {
                 $prospect->setOwner($this->getUser());
+
+                $this->sendEmailNotificationService->send($prospect);
             }
 
             $entityManager->flush();
