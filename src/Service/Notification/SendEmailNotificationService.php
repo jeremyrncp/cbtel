@@ -22,7 +22,7 @@ class SendEmailNotificationService
     {
         $template = $this->notificationService->getDefaultTemplate(NotificationService::TYPE_EMAIL);
 
-        if ($template->getType() === NotificationService::TYPE_SMS && ($prospect->getEmail() === null OR $prospect->getEmail() === "")) {
+        if ($template->getType() === NotificationService::TYPE_EMAIL && ($prospect->getEmail() === null OR $prospect->getEmail() === "")) {
             $this->loggerService->saveLog("Prospect", "L'email du prospect " . $prospect->getId() . " doit être définit");
         } else {
             $templateRendered = $this->templateNotiifcationService->render($template, $prospect);
@@ -31,15 +31,17 @@ class SendEmailNotificationService
                 $to = $prospect->getEmail();
             }
 
-            $sender = $this->senderNotificationFactory->create($template->getType());
-             if ($sender->send($to, $templateRendered)) {
-                $this->loggerService->saveLog("Prospect", "Notification email transmise au prospect " . $prospect->getId());
+            if (isset($to)) {
+                $sender = $this->senderNotificationFactory->create($template->getType());
+                if ($sender->send($to, $templateRendered)) {
+                    $this->loggerService->saveLog("Prospect", "Notification email transmise au prospect " . $prospect->getId());
 
-                if ($template->getType() === NotificationService::TYPE_EMAIL) {
-                    $prospect->setEmailNotification(new \DateTime());
+                    if ($template->getType() === NotificationService::TYPE_EMAIL) {
+                        $prospect->setEmailNotification(new \DateTime());
+                    }
+                } else {
+                    $this->loggerService->saveLog("Prospect", "Une erreur inconnue est survenue lors de l'envoie de la notification email au prospect " . $prospect->getId());
                 }
-            } else {
-                $this->loggerService->saveLog("Prospect", "Une erreur inconnue est survenue lors de l'envoie de la notification email au prospect " . $prospect->getId());
             }
         }
 
