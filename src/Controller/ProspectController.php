@@ -107,7 +107,9 @@ final class ProspectController extends AbstractController
             if ($prospect->getRendezvous() !== null) {
                 $prospect->setOwner($this->getUser());
 
-                $this->sendEmailNotificationService->send($prospect);
+                if ($prospect->getEmailNotification() === null) {
+                    $this->sendEmailNotificationService->send($prospect);
+                }
             }
 
             $entityManager->flush();
